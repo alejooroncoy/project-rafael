@@ -1,7 +1,7 @@
 "use client";
-
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { InputWithIcon } from "@/components/ui/input-with-icon";
+import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import { signIn as nextAuthSignIn } from "next-auth/react";
 import { useAuthMutation } from "@/lib/public/hooks/useAuthMutation";
 import Link from "next/link";
 import { toast } from "sonner";
+import { User, Mail, Lock, Key, ArrowRight } from "lucide-react";
 
 const registerSchema = z.object({
   name: z.string().min(2, "El nombre es requerido"),
@@ -27,7 +28,7 @@ export default function RegisterPage() {
   });
   const router = useRouter();
   const { signUp } = useAuthMutation();
-
+  
   async function onSubmit(values: RegisterValues) {
     signUp.mutate(values, {
       onSuccess: async (token) => {
@@ -44,117 +45,160 @@ export default function RegisterPage() {
       },
     });
   }
-
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-sm sm:max-w-md bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
+      {/* Elementos decorativos */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/4"></div>
+      </div>
+      
+      {/* Logo de la empresa */}
+      <div className="mb-6 z-10">
+        <h2 className="text-2xl font-bold text-primary">WorkConnect</h2>
+      </div>
+      
+      {/* Contenedor principal */}
+      <div className="w-full max-w-md z-10 bg-white border border-gray-200 rounded-lg shadow-sm p-8">
+        {/* Encabezado */}
         <div className="text-center mb-8">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-800 mb-2">
-            Crear Cuenta
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Crear cuenta
           </h1>
-          <p className="text-sm sm:text-base text-gray-600">
-            Únete a nuestra plataforma
+          <p className="text-gray-500">
+            Únete a nuestra plataforma profesional
           </p>
         </div>
         
+        {/* Formulario */}
         <Form {...form}>
-          <form className="space-y-5 sm:space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base font-medium">Nombre</FormLabel>
+                  <FormLabel className="text-gray-700 font-medium">
+                    Nombre completo
+                  </FormLabel>
                   <FormControl>
-                    <Input 
+                    <InputWithIcon 
+                      icon={User} 
                       type="text" 
-                      {...field} 
-                      disabled={signUp.isPending}
-                      className="h-11 sm:h-12 text-base"
                       placeholder="Tu nombre completo"
+                      disabled={signUp.isPending}
+                      state={form.formState.errors.name ? "error" : undefined}
+                      {...field} 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-danger text-sm" />
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base font-medium">Email</FormLabel>
+                  <FormLabel className="text-gray-700 font-medium">
+                    Correo electrónico
+                  </FormLabel>
                   <FormControl>
-                    <Input 
+                    <InputWithIcon 
+                      icon={Mail} 
                       type="email" 
-                      {...field} 
+                      placeholder="tu@empresa.com"
                       disabled={signUp.isPending}
-                      className="h-11 sm:h-12 text-base"
-                      placeholder="tu@email.com"
+                      state={form.formState.errors.email ? "error" : undefined}
+                      {...field} 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-danger text-sm" />
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base font-medium">Contraseña</FormLabel>
+                  <FormLabel className="text-gray-700 font-medium">
+                    Contraseña
+                  </FormLabel>
                   <FormControl>
-                    <Input 
+                    <InputWithIcon 
+                      icon={Lock} 
                       type="password" 
-                      {...field} 
+                      placeholder="Mínimo 6 caracteres"
                       disabled={signUp.isPending}
-                      className="h-11 sm:h-12 text-base"
-                      placeholder="••••••••"
+                      state={form.formState.errors.password ? "error" : undefined}
+                      {...field} 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-danger text-sm" />
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
               name="secretSignup"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm sm:text-base font-medium">Código de Registro</FormLabel>
+                  <FormLabel className="text-gray-700 font-medium">
+                    Código de registro
+                  </FormLabel>
                   <FormControl>
-                    <Input 
+                    <InputWithIcon 
+                      icon={Key} 
                       type="text" 
-                      {...field} 
+                      placeholder="Ingresa el código proporcionado"
                       disabled={signUp.isPending}
-                      className="h-11 sm:h-12 text-base"
-                      placeholder="Ingresa el código de registro"
+                      state={form.formState.errors.secretSignup ? "error" : undefined}
+                      {...field} 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-danger text-sm" />
                 </FormItem>
               )}
             />
-            <button 
+            
+            <Button 
               type="submit" 
-              disabled={signUp.isPending} 
-              className="w-full h-11 sm:h-12 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg shadow-md transition-colors duration-200 mt-6 sm:mt-8 text-base disabled:opacity-50 disabled:cursor-not-allowed"
+              variant="default"
+              size="lg"
+              width="full"
+              isLoading={signUp.isPending}
+              loadingText="Creando cuenta..."
+              rightIcon={<ArrowRight />}
+              className="mt-2"
             >
-              {signUp.isPending ? "Registrando..." : "Registrarse"}
-            </button>
+              Crear cuenta
+            </Button>
           </form>
         </Form>
         
-        <div className="mt-6 sm:mt-8 text-center text-sm sm:text-base text-gray-600">
-          ¿Ya tienes cuenta?{" "}
-          <Link 
-            href="/auth/login" 
-            className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors duration-200"
-          >
-            Inicia sesión
-          </Link>
+        {/* Footer */}
+        <div className="mt-8 pt-6 border-t border-gray-200 text-center">
+          <p className="text-sm text-gray-500">
+            ¿Ya tienes cuenta?{" "}
+            <Link 
+              href="/auth/login" 
+              className="text-primary hover:opacity-80 font-medium transition-all"
+            >
+              Iniciar sesión
+            </Link>
+          </p>
         </div>
+      </div>
+      
+      {/* Pie de página corporativo */}
+      <div className="mt-8 text-center text-gray-400 text-xs z-10">
+        <p>&copy; {new Date().getFullYear()} WorkConnect. Todos los derechos reservados.</p>
       </div>
     </div>
   );
-} 
+}
