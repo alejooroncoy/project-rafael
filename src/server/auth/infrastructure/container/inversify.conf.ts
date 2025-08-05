@@ -1,0 +1,30 @@
+import { Container } from 'inversify';
+import { AUTH_CONTAINER_TYPES } from './types';
+import { PrismaUserRepository } from '../repositories/PrismaUserRepository';
+import { FirebaseAuthService } from '../services/FirebaseAuthService';
+import { ValidateFirebaseTokenCase } from '../../application/ValidateFirebaseTokenCase';
+import { FindUserByFirebaseUidCase } from '../../application/FindUserByFirebaseUidCase';
+import { CreateUserFromFirebaseCase } from '../../application/CreateUserFromFirebaseCase';
+import { GetUserCase } from '../../application/GetUserCase';
+import { SetRoleCase } from '../../application/SetRoleCase';
+import { CreateUserCase } from '../../application/CreateUserCase';
+import { GetAllUsersCase } from '../../application/GetAllUsersCase';
+import { UpdateUserCase } from '../../application/UpdateUserCase';
+import { UpdateUserRoleCase } from '../../application/UpdateUserRoleCase';
+import { DeleteUserCase } from '../../application/DeleteUserCase';
+
+const AuthContainer = new Container();
+AuthContainer.bind(AUTH_CONTAINER_TYPES.UserRepository).to(PrismaUserRepository);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.AuthService).to(FirebaseAuthService);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.ValidateFirebaseTokenCase).to(ValidateFirebaseTokenCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.FindUserByFirebaseUidCase).to(FindUserByFirebaseUidCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.CreateUserFromFirebaseCase).to(CreateUserFromFirebaseCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.GetUserCase).to(GetUserCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.SetRoleCase).to(SetRoleCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.CreateUserCase).to(CreateUserCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.GetAllUsersCase).to(GetAllUsersCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.UpdateUserCase).to(UpdateUserCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.UpdateUserRoleCase).to(UpdateUserRoleCase);
+AuthContainer.bind(AUTH_CONTAINER_TYPES.DeleteUserCase).to(DeleteUserCase);
+
+export { AuthContainer }; 
