@@ -1,32 +1,40 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #4f46e5;
-  --secondary: #9333ea;
-  --accent: #10b981;
-  --muted: #f3f4f6;
-  --border: #e5e7eb;
-
-  --font-sans: 'Inter', sans-serif;
-  --font-mono: 'Fira Code', monospace;
+@theme {
+  /* Colores principales */
+  --color-primary: #4f46e5;     /* Indigo vibrante */
+  --color-secondary: #8b5cf6;   /* Púrpura */
+  --color-accent: #06b6d4;      /* Cian */
+  
+  /* Variantes de los colores principales */
+  --color-primary-hover: #4338ca;
+  --color-secondary-hover: #7c3aed;
+  --color-accent-hover: #0891b2;
+  
+  /* Colores de estado */
+  --color-success: #10b981;     /* Verde esmeralda */
+  --color-warning: #f59e0b;     /* Ámbar */
+  --color-danger: #ef4444;      /* Rojo */
+  --color-info: #3b82f6;        /* Azul */
+  
+  /* Colores neutrales */
+  --color-white: #ffffff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-black: #000000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #6366f1;
-    --secondary: #c084fc;
-    --accent: #34d399;
-    --muted: #1f2937;
-    --border: #374151;
-  }
-}
-
+/* Estilos base */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+  font-family: ui-sans-serif, system-ui, sans-serif;
 }
